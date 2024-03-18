@@ -1,5 +1,4 @@
-```markdown
-## Rate limiter
+# Rate limiter
 
 Este projeto consiste no desenvolvimento de um limitador de taxa em Go, projetado para controlar o número máximo de requisições por segundo com base em endereços IP específicos ou tokens de acesso. O objetivo é gerenciar de forma eficaz o tráfego de serviços web.
 
