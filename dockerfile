@@ -7,6 +7,7 @@ RUN mkdir -p internal/config
 RUN mkdir -p internal/middleware
 RUN mkdir -p internal/limiter
 RUN mkdir -p internal/bd
+RUN mkdir -p internal/utilities
 
 COPY go.mod ./
 COPY go.sum ./
@@ -20,15 +21,17 @@ COPY internal/limiter/limiter.go ./internal/limiter
 COPY internal/limiter/limiter_test.go ./internal/limiter
 COPY internal/bd/redis_client.go ./internal/bd
 COPY internal/bd/bd_interface.go ./internal/bd
+COPY internal/utilities/utilities.go ./internal/utilities
+
 
 RUN go mod download
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o go-rate-limit cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o go-ratelimiter cmd/main.go
 
 FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/go-rate-limit ./
+COPY --from=builder /app/go-ratelimiter ./
 
-CMD ["./go-rate-limit"]
+CMD ["./go-ratelimiter"]
